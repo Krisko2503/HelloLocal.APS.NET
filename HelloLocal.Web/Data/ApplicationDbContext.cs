@@ -10,5 +10,7 @@ namespace HelloLocal.Web.Data
         public DbSet<LocalGuide> Guides { get; set; }
         public DbSet<TourExperience> Experiences { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<LocalGuide> LocalGuides { get; set; }
+        public DbSet<TourExperience> TourExperiences { get; set; }
     }
 }

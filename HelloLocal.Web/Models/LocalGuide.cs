@@ -13,6 +13,7 @@ namespace HelloLocal.Web.Models
 
         [Required]
         public string Bio { get; set; }
+        public string City { get; set; }
 
         [Required]
         public decimal HourlyRate { get; set; }

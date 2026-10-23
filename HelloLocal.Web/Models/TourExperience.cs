@@ -13,6 +13,8 @@ namespace HelloLocal.Web.Models
 
         public string Description { get; set; }
 
+        
+        public decimal Price { get; set; }
         public int LocalGuideId { get; set; }
         [ForeignKey("LocalGuideId")]
         public LocalGuide Guide { get; set; }

@@ -59,6 +59,10 @@ namespace HelloLocal.Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("HourlyRate")
                         .HasColumnType("decimal(18,2)");
 
@@ -69,7 +73,7 @@ namespace HelloLocal.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Guides");
+                    b.ToTable("LocalGuide");
                 });
 
             modelBuilder.Entity("HelloLocal.Web.Models.TourExperience", b =>
@@ -87,6 +91,9 @@ namespace HelloLocal.Web.Migrations
                     b.Property<int>("LocalGuideId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -95,7 +102,7 @@ namespace HelloLocal.Web.Migrations
 
                     b.HasIndex("LocalGuideId");
 
-                    b.ToTable("Experiences");
+                    b.ToTable("TourExperience");
                 });
 
             modelBuilder.Entity("HelloLocal.Web.Models.Booking", b =>
