@@ -1,0 +1,42 @@
+@model IEnumerable<HelloLocal.Web.Models.LocalGuide>
+
+@{
+    ViewData["title_for_page"] = "Our Local Experts";
+}
+
+<DIV style="padding:20px; background-color:#fff; border-bottom: 2px solid #eee;">
+    <h2 class="main_guides_header_title" style="color:#222; font-weight:800;">MEET THE LOCALS</h2>
+    <p class="sub_text_for_guides_page">These are the guys who know the city better than anyone.</p>
+    <a asp-action="Create" class="btn btn-success add_new_guide_btn" style="background:#10b981; border:none; font-weight:bold;">+ Add New Guide</a>
+</DIV>
+
+<br>
+
+<div class="container main_list_container_for_guides">
+    <div class="row">
+
+        @foreach (var person in Model)
+        {
+            <div class="col-md-6" style="margin-bottom:25px;">
+                <DIV class="single_guide_card_box" style="border: 1px solid #ddd; padding:18px; border-radius:6px; background:#fafafa; box-shadow: 2px 2px 5px rgba(0,0,0,0.05);">
+
+                    <h3 class="the_name_of_the_guide" style="color:#c82a54; margin-bottom:5px;">@person.Name</h3>
+                    <span class="the_city_badge" style="background:#222; color:white; padding:3px 8px; border-radius:3px; font-size:12px;">@person.City</span>
+
+                    <p class="guide_bio_text_para" style="margin-top:15px; color:#555;">@person.Bio</p>
+
+                    <div style="margin-top:15px; border-top:1px dashed #ccc; padding-top:10px;">
+                        <a asp-action="Edit" asp-route-id="@person.Id" class="btn btn-sm btn-primary edit_link_btn_small">Edit</a>
+                        &nbsp;&nbsp;
+                        <A asp-action="Details" asp-route-id="@person.Id" class="btn btn-sm btn-info details_btn_link_small" style="color:white;">View</A>
+                        &nbsp;&nbsp;
+                        <a asp-action="Delete" asp-route-id="@person.Id" class="btn btn-sm btn-danger delete_btn_link_small">Drop</a>
+                    </div>
+
+                </DIV>
+            </div>
+        }
+
+    </div>
+</div>
+<br><br>

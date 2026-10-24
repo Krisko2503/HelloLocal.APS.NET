@@ -24,7 +24,7 @@
                             <a class="nav-link text-dark the_home_link_btn" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <A class='nav-link text-dark find_guide_link' asp-area="" asp-controller="Guides" asp-action="Index">Our Guides</A>
+                            <A asp-action="Index" asp-area="" asp-controller="LocalGuides" class="nav-link text-dark find_guide_link">Our Guides</A>
                         </li>
                         <li class="nav-item"><a class="nav-link text-dark tours_link_item" asp-area="" asp-controller="TourExperiences" asp-action="Index">Experiences</a></li>
                         <li class="nav-item">
@@ -43,7 +43,7 @@
         </main>
     </div>
 
-    <!-- skipped the complex footer, keep it simple -->
+   
     <footer class='border-top footer text-muted the_bottom_footer_area' style="margin-top:60px;padding:20px;text-align:center;">
         <div class="container">
             &copy; 2026 - Hello Local Platform - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy policy</a>

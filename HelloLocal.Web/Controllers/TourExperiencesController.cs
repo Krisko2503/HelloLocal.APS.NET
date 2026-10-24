@@ -14,11 +14,22 @@ public class TourExperiencesController : Controller
     }
 
     // GET: TOUREXPERIENCES
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index(string search_word, decimal? max_money)
     {
-        return View(await _context.Experiences.ToListAsync());
-    }
+        var the_tours_list = from t in _context.TourExperiences select t;
 
+        if (!String.IsNullOrEmpty(search_word))
+        {
+            the_tours_list = the_tours_list.Where(s => s.Title.Contains(search_word) || s.Description.Contains(search_word));
+        }
+
+        if (max_money.HasValue)
+        {
+            the_tours_list = the_tours_list.Where(t => t.Price <= max_money.Value);
+        }
+
+        return View(await the_tours_list.ToListAsync());
+    }
     // GET: TOUREXPERIENCES/Details/5
     public async Task<IActionResult> Details(int? id)
     {

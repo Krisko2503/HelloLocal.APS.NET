@@ -6,6 +6,7 @@ namespace HelloLocal.Web.Data
 {
     public static class DataSeeder
     {
+         
         public static void Seed(ApplicationDbContext dbContext)
         {
             if (dbContext.LocalGuides.Any())

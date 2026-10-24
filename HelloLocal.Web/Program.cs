@@ -32,6 +32,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<HelloLocal.Web.Data.ApplicationDbContext>();
+    HelloLocal.Web.Data.DataSeeder.Seed(db);
+}
 
 app.Run();
