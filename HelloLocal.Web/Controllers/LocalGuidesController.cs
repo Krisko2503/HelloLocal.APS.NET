@@ -48,17 +48,18 @@ public class LocalGuidesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Bio,HourlyRate,Experiences")] LocalGuide localguide)
+    public async Task<IActionResult> Create([Bind("Id,Name,City,Bio,HourlyRate")] LocalGuide localGuide)
     {
+        ModelState.Remove("Experiences"); // Dobavi tozi red
+
         if (ModelState.IsValid)
         {
-            _context.Add(localguide);
+            _context.Add(localGuide);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(localguide);
+        return View(localGuide);
     }
-
     // GET: LOCALGUIDES/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
