@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HelloLocal.Web.Models;
 using HelloLocal.Web.Data;
+using Microsoft.AspNetCore.Authorization;
 
 public class LocalGuidesController : Controller
 {
@@ -38,6 +39,7 @@ public class LocalGuidesController : Controller
     }
 
     // GET: LOCALGUIDES/Create
+    [Authorize(Roles = "Admin")]
     public IActionResult Create()
     {
         return View();
@@ -48,6 +50,7 @@ public class LocalGuidesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create([Bind("Id,Name,City,Bio,HourlyRate")] LocalGuide localGuide)
     {
         ModelState.Remove("Experiences"); // Dobavi tozi red
@@ -61,6 +64,7 @@ public class LocalGuidesController : Controller
         return View(localGuide);
     }
     // GET: LOCALGUIDES/Edit/5
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -81,6 +85,7 @@ public class LocalGuidesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,Bio,HourlyRate,Experiences")] LocalGuide localguide)
     {
         if (id != localguide.Id)
@@ -112,6 +117,7 @@ public class LocalGuidesController : Controller
     }
 
     // GET: LOCALGUIDES/Delete/5
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -132,6 +138,7 @@ public class LocalGuidesController : Controller
     // POST: LOCALGUIDES/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
         var localguide = await _context.Guides.FindAsync(id);
