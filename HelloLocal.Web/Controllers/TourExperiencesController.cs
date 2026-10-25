@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HelloLocal.Web.Models;
 using HelloLocal.Web.Data;
+using Microsoft.AspNetCore.Authorization;
 
 public class TourExperiencesController : Controller
 {
@@ -49,6 +50,7 @@ public class TourExperiencesController : Controller
     }
 
     // GET: TOUREXPERIENCES/Create
+    [Authorize(Roles = "Admin")]
     public IActionResult Create()
     {
         return View();
@@ -59,6 +61,7 @@ public class TourExperiencesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create([Bind("Id,Title,Description,LocalGuideId,Guide")] TourExperience tourexperience)
     {
         if (ModelState.IsValid)
@@ -71,6 +74,7 @@ public class TourExperiencesController : Controller
     }
 
     // GET: TOUREXPERIENCES/Edit/5
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -91,6 +95,7 @@ public class TourExperiencesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Description,LocalGuideId,Guide")] TourExperience tourexperience)
     {
         if (id != tourexperience.Id)
@@ -122,6 +127,7 @@ public class TourExperiencesController : Controller
     }
 
     // GET: TOUREXPERIENCES/Delete/5
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -142,6 +148,7 @@ public class TourExperiencesController : Controller
     // POST: TOUREXPERIENCES/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
         var tourexperience = await _context.Experiences.FindAsync(id);

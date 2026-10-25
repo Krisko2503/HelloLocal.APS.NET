@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<BODY style="background-color:#fcfcfc;">
+<BODY style="background-color:#fcfcfc;" class="d-flex flex-column min-vh-100" >
 
     <header>
         <NAV class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow" style='margin-bottom: 20px;'>
@@ -47,9 +47,13 @@
     </div>
 
    
-    <footer class='border-top footer text-muted the_bottom_footer_area' style="margin-top:60px;padding:20px;text-align:center;">
+    <footer class="mt-auto" style="background-color: #f4f4f4; border-top: 2px solid #ddd; padding: 15px 0; text-align: center;">
         <div class="container">
-            &copy; 2026 - Hello Local Platform - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy policy</a>
+            <h5 style="color: #c82a54; font-weight: 800; margin-bottom: 2px;">HELLO LOCAL</h5>
+            <div style="font-size: 13px; color: #777;">
+                &copy; @DateTime.Now.Year - Hello Local |
+                <a asp-area="" asp-controller="Home" asp-action="Privacy" style="color: #10b981; font-weight: bold; text-decoration: none;">Privacy Policy</a>
+            </div>
         </div>
     </footer>
 

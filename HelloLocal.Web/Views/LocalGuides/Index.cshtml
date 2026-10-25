@@ -3,15 +3,16 @@
 @{
     ViewData["title_for_page"] = "Our Local Experts";
 }
-
 <DIV style="padding:20px; background-color:#fff; border-bottom: 2px solid #eee;">
     <h2 class="main_guides_header_title" style="color:#222; font-weight:800;">MEET THE LOCALS</h2>
     <p class="sub_text_for_guides_page">These are the guys who know the city better than anyone.</p>
-    <a asp-action="Create" class="btn btn-success add_new_guide_btn" style="background:#10b981; border:none; font-weight:bold;">+ Add New Guide</a>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Create" class="btn btn-success add_new_guide_btn" style="background:#10b981; border:none; font-weight:bold;">+ Add New Guide</a>
+    }
 </DIV>
-
 <br>
-
 <div class="container main_list_container_for_guides">
     <div class="row">
 
@@ -26,17 +27,25 @@
                     <p class="guide_bio_text_para" style="margin-top:15px; color:#555;">@person.Bio</p>
 
                     <div style="margin-top:15px; border-top:1px dashed #ccc; padding-top:10px;">
-                        <a asp-action="Edit" asp-route-id="@person.Id" class="btn btn-sm btn-primary edit_link_btn_small">Edit</a>
-                        &nbsp;&nbsp;
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@person.Id" class="btn btn-sm btn-primary edit_link_btn_small">Edit</a>
+                            <text>&nbsp;&nbsp;</text>
+                        }
+
                         <A asp-action="Details" asp-route-id="@person.Id" class="btn btn-sm btn-info details_btn_link_small" style="color:white;">View</A>
-                        &nbsp;&nbsp;
-                        <a asp-action="Delete" asp-route-id="@person.Id" class="btn btn-sm btn-danger delete_btn_link_small">Drop</a>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <text>&nbsp;&nbsp;</text>
+                            <a asp-action="Delete" asp-route-id="@person.Id" class="btn btn-sm btn-danger delete_btn_link_small">Drop</a>
+                        }
                     </div>
 
                 </DIV>
             </div>
         }
 
-    </div>
-</div>
-<br><br>
+    </div></div>
+    <br>
+    <br>

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Identity;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -66,6 +67,17 @@ using (var scope = app.Services.CreateScope())
         {
             await userManager.AddToRoleAsync(admin, "Admin");
         }
+    }
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<Microsoft.AspNetCore.Identity.UserManager<Microsoft.AspNetCore.Identity.IdentityUser>>();
+
+    if (await userManager.FindByEmailAsync("user@hellolocal.bg") == null)
+    {
+        var standardUser = new Microsoft.AspNetCore.Identity.IdentityUser { UserName = "user@hellolocal.bg", Email = "user@hellolocal.bg" };
+        await userManager.CreateAsync(standardUser, "User123!");
     }
 }
 
