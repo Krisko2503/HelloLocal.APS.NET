@@ -1,8 +1,9 @@
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using HelloLocal.Web.Models;
 using HelloLocal.Web.Data;
+using HelloLocal.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 public class BookingsController : Controller
 {
@@ -40,6 +41,7 @@ public class BookingsController : Controller
     // GET: BOOKINGS/Create
     public IActionResult Create()
     {
+        ViewData["TourExperienceId"] = new SelectList(_context.TourExperiences, "Id", "Title");
         return View();
     }
 
@@ -48,14 +50,18 @@ public class BookingsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,TouristName,BookingDate,TourExperienceId,Experience")] Booking booking)
+    public async Task<IActionResult> Create([Bind("Id,TouristName,BookingDate,TourExperienceId")] Booking booking)
     {
+        ModelState.Remove("Experience");
+
         if (ModelState.IsValid)
         {
             _context.Add(booking);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        ViewData["TourExperienceId"] = new SelectList(_context.TourExperiences, "Id", "Title", booking.TourExperienceId);
         return View(booking);
     }
 
