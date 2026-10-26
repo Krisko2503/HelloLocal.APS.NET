@@ -1,48 +1,54 @@
 @model HelloLocal.Web.Models.LocalGuide
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Add New Guide";
 }
 
-<h1>Create</h1>
-
-<h4>LocalGuide</h4>
+<h2 style="color: #c82a54; font-weight: 800;">Add New Guide</h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group mb-3">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label" style="font-weight: bold;"></label>
                 <input asp-for="Name" class="form-control" />
+                <small class="text-muted">Enter the full name of the guide.</small>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="City" class="control-label"></label>
+                <label asp-for="City" class="control-label" style="font-weight: bold;"></label>
                 <input asp-for="City" class="form-control" />
+                <small class="text-muted">In which city will this local guide operate?</small>
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="Bio" class="control-label"></label>
-                <input asp-for="Bio" class="form-control" />
+                <label asp-for="Bio" class="control-label" style="font-weight: bold;"></label>
+                <textarea asp-for="Bio" class="form-control" rows="3"></textarea>
+                <small class="text-muted">Describe the guide in a short and engaging manner.</small>
                 <span asp-validation-for="Bio" class="text-danger"></span>
             </div>
 
-            <div class="form-group mb-3">
-                <label asp-for="HourlyRate" class="control-label"></label>
-                <input asp-for="HourlyRate" class="form-control" />
+            <div class="form-group mb-4">
+                <label asp-for="HourlyRate" class="control-label" style="font-weight: bold;"></label>
+                <input asp-for="HourlyRate" class="form-control" type="number" step="0.01" />
+                <small class="text-muted">Hourly rate in USD (e.g., 25.50).</small>
                 <span asp-validation-for="HourlyRate" class="text-danger"></span>
             </div>
 
-            <div class="form-group mt-4">
-                <input type="submit" value="Create" class="btn btn-success" />
-                <a asp-action="Index" class="btn btn-outline-dark ms-2">Back to List</a>
+            <div class="form-group">
+                <input type="submit" value="Create Guide" class="btn btn-primary" style="background-color: #10b981; border: none; font-weight: bold;" />
+                <a asp-action="Index" class="btn btn-link" style="color: #c82a54; text-decoration: none; font-weight: bold;">Back to List</a>
             </div>
         </form>
-        
     </div>
 </div>
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

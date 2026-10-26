@@ -1,9 +1,10 @@
-
 using HelloLocal.Web.Data;
 using HelloLocal.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 public class BookingsController : Controller
 {
@@ -15,9 +16,9 @@ public class BookingsController : Controller
     }
 
     // GET: BOOKINGS
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index()
     {
-        return View(await _context.Bookings.ToListAsync());
+        return View(await _context.Bookings.Include(b => b.Experience).ToListAsync());
     }
 
     // GET: BOOKINGS/Details/5
@@ -29,7 +30,9 @@ public class BookingsController : Controller
         }
 
         var booking = await _context.Bookings
+            .Include(b => b.Experience)
             .FirstOrDefaultAsync(m => m.Id == id);
+
         if (booking == null)
         {
             return NotFound();
@@ -41,7 +44,7 @@ public class BookingsController : Controller
     // GET: BOOKINGS/Create
     public IActionResult Create()
     {
-        ViewData["TourExperienceId"] = new SelectList(_context.TourExperiences, "Id", "Title");
+        ViewBag.Experiences = new SelectList(_context.TourExperiences, "Id", "Title");
         return View();
     }
 
@@ -61,7 +64,7 @@ public class BookingsController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        ViewData["TourExperienceId"] = new SelectList(_context.TourExperiences, "Id", "Title", booking.TourExperienceId);
+        ViewBag.Experiences = new SelectList(_context.TourExperiences, "Id", "Title", booking.TourExperienceId);
         return View(booking);
     }
 
@@ -78,6 +81,8 @@ public class BookingsController : Controller
         {
             return NotFound();
         }
+
+        ViewBag.Experiences = new SelectList(_context.TourExperiences, "Id", "Title", booking.TourExperienceId);
         return View(booking);
     }
 
@@ -86,12 +91,14 @@ public class BookingsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,TouristName,BookingDate,TourExperienceId,Experience")] Booking booking)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,TouristName,BookingDate,TourExperienceId")] Booking booking)
     {
         if (id != booking.Id)
         {
             return NotFound();
         }
+
+        ModelState.Remove("Experience");
 
         if (ModelState.IsValid)
         {
@@ -113,6 +120,8 @@ public class BookingsController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
+
+        ViewBag.Experiences = new SelectList(_context.TourExperiences, "Id", "Title", booking.TourExperienceId);
         return View(booking);
     }
 
@@ -125,7 +134,9 @@ public class BookingsController : Controller
         }
 
         var booking = await _context.Bookings
+            .Include(b => b.Experience)
             .FirstOrDefaultAsync(m => m.Id == id);
+
         if (booking == null)
         {
             return NotFound();

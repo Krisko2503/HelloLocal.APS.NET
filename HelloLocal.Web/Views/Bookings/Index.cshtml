@@ -40,13 +40,17 @@
                 @Html.DisplayFor(model => item.TourExperienceId)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Experience)
+                @Html.DisplayFor(model => item.Experience.Title)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" style="color: #10b981; font-weight: bold; text-decoration: none; margin-right: 10px;">Details</a>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" style="color: #f59e0b; font-weight: bold; text-decoration: none; margin-right: 10px;">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" style="color: #c82a54; font-weight: bold; text-decoration: none;">Delete</a>
+                    }
+                </td>
         </tr>
 }
     </tbody>

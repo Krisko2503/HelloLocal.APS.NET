@@ -1,49 +1,56 @@
 @model HelloLocal.Web.Models.TourExperience
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Experience";
 }
 
-<h1>Edit</h1>
-
-<h4>TourExperience</h4>
+<h2 style="color: #c82a54; font-weight: 800;">Edit Experience</h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+            <input type="hidden" asp-for="LocalGuideId" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Title" class="control-label" style="font-weight: bold;"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Price" class="control-label" style="font-weight: bold;"></label>
+                <input asp-for="Price" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="Description" class="control-label" style="font-weight: bold;"></label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="LocalGuideId" class="control-label"></label>
-                <input asp-for="LocalGuideId" class="form-control" />
+            
+            <div class="form-group mb-4">
+                <label asp-for="LocalGuideId" class="control-label" style="font-weight: bold;">Guide</label>
+                <select asp-for="LocalGuideId" class="form-control" asp-items="ViewBag.LocalGuides">
+                    <option value="">-- Choose a guide --</option>
+                </select>
+                <small class="text-muted">Izberete gid za tova prejivqvane.</small>
                 <span asp-validation-for="LocalGuideId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Guide" class="control-label"></label>
-                <input asp-for="Guide" class="form-control" />
-                <span asp-validation-for="Guide" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save Changes" class="btn btn-primary" style="background-color: #f59e0b; border: none; font-weight: bold; color: white;" />
+                <a asp-action="Index" class="btn btn-link" style="color: #c82a54; text-decoration: none; font-weight: bold;">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

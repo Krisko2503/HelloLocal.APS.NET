@@ -35,11 +35,15 @@
             @Html.DisplayNameFor(model => model.Experience)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Experience)
+            @Model.Experience.Title - @Model.Experience.Description
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning" style="font-weight: bold;">Edit</a>
+        <span>|</span>
+    }
+    <a asp-action="Index" style="color: #c82a54; font-weight: bold; text-decoration: none;">Back to List</a>
 </div>

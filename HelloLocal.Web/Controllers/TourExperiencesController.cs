@@ -1,9 +1,12 @@
-
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HelloLocal.Web.Models;
 using HelloLocal.Web.Data;
 using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 public class TourExperiencesController : Controller
 {
@@ -31,6 +34,7 @@ public class TourExperiencesController : Controller
 
         return View(await the_tours_list.ToListAsync());
     }
+
     // GET: TOUREXPERIENCES/Details/5
     public async Task<IActionResult> Details(int? id)
     {
@@ -39,7 +43,7 @@ public class TourExperiencesController : Controller
             return NotFound();
         }
 
-        var tourexperience = await _context.Experiences
+        var tourexperience = await _context.TourExperiences
             .FirstOrDefaultAsync(m => m.Id == id);
         if (tourexperience == null)
         {
@@ -53,6 +57,7 @@ public class TourExperiencesController : Controller
     [Authorize(Roles = "Admin")]
     public IActionResult Create()
     {
+        ViewBag.LocalGuides = new SelectList(_context.LocalGuides, "Id", "Name");
         return View();
     }
 
@@ -62,14 +67,18 @@ public class TourExperiencesController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Create([Bind("Id,Title,Description,LocalGuideId,Guide")] TourExperience tourexperience)
+    public async Task<IActionResult> Create([Bind("Id,Title,Description,Price,LocalGuideId")] TourExperience tourexperience)
     {
+        ModelState.Remove("Guide");
+
         if (ModelState.IsValid)
         {
             _context.Add(tourexperience);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        ViewBag.LocalGuides = new SelectList(_context.LocalGuides, "Id", "Name", tourexperience.LocalGuideId);
         return View(tourexperience);
     }
 
@@ -82,11 +91,13 @@ public class TourExperiencesController : Controller
             return NotFound();
         }
 
-        var tourexperience = await _context.Experiences.FindAsync(id);
+        var tourexperience = await _context.TourExperiences.FindAsync(id);
         if (tourexperience == null)
         {
             return NotFound();
         }
+
+        ViewBag.LocalGuides = new SelectList(_context.LocalGuides, "Id", "Name", tourexperience.LocalGuideId);
         return View(tourexperience);
     }
 
@@ -96,12 +107,14 @@ public class TourExperiencesController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Description,LocalGuideId,Guide")] TourExperience tourexperience)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Description,Price,LocalGuideId")] TourExperience tourexperience)
     {
         if (id != tourexperience.Id)
         {
             return NotFound();
         }
+
+        ModelState.Remove("Guide");
 
         if (ModelState.IsValid)
         {
@@ -123,6 +136,8 @@ public class TourExperiencesController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
+
+        ViewBag.LocalGuides = new SelectList(_context.LocalGuides, "Id", "Name", tourexperience.LocalGuideId);
         return View(tourexperience);
     }
 
@@ -135,7 +150,7 @@ public class TourExperiencesController : Controller
             return NotFound();
         }
 
-        var tourexperience = await _context.Experiences
+        var tourexperience = await _context.TourExperiences
             .FirstOrDefaultAsync(m => m.Id == id);
         if (tourexperience == null)
         {
@@ -151,10 +166,10 @@ public class TourExperiencesController : Controller
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var tourexperience = await _context.Experiences.FindAsync(id);
+        var tourexperience = await _context.TourExperiences.FindAsync(id);
         if (tourexperience != null)
         {
-            _context.Experiences.Remove(tourexperience);
+            _context.TourExperiences.Remove(tourexperience);
         }
 
         await _context.SaveChangesAsync();
@@ -163,6 +178,6 @@ public class TourExperiencesController : Controller
 
     private bool TourExperienceExists(int? id)
     {
-        return _context.Experiences.Any(e => e.Id == id);
+        return _context.TourExperiences.Any(e => e.Id == id);
     }
 }
