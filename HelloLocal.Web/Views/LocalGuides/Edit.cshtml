@@ -32,9 +32,10 @@
                 <span asp-validation-for="Bio" class="text-danger"></span>
             </div>
 
-            <div class="form-group mb-3">
-                <label asp-for="HourlyRate" class="control-label"></label>
-                <input asp-for="HourlyRate" class="form-control" />
+            <div class="form-group mb-4">
+                <label asp-for="HourlyRate" class="control-label" style="font-weight: bold;"></label>
+                <input asp-for="HourlyRate" class="form-control" type="number" step="1" asp-format="{0:0}" />
+                <small class="text-muted">Please enter a whole number (e.g., 25).</small>
                 <span asp-validation-for="HourlyRate" class="text-danger"></span>
             </div>
 
@@ -46,9 +47,7 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

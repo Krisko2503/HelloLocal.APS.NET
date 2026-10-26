@@ -53,7 +53,7 @@ public class LocalGuidesController : Controller
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create([Bind("Id,Name,City,Bio,HourlyRate")] LocalGuide localGuide)
     {
-        ModelState.Remove("Experiences"); // Dobavi tozi red
+        ModelState.Remove("Experiences"); 
 
         if (ModelState.IsValid)
         {
@@ -86,34 +86,31 @@ public class LocalGuidesController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,Bio,HourlyRate,Experiences")] LocalGuide localguide)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,City,Bio,HourlyRate")] LocalGuide localGuide)
     {
-        if (id != localguide.Id)
+        if (id != localGuide.Id)
         {
             return NotFound();
         }
+
+      
+        ModelState.Remove("Experiences");
 
         if (ModelState.IsValid)
         {
             try
             {
-                _context.Update(localguide);
+                _context.Update(localGuide);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LocalGuideExists(localguide.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                if (!LocalGuideExists(localGuide.Id)) return NotFound();
+                else throw;
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(localguide);
+        return View(localGuide);
     }
 
     // GET: LOCALGUIDES/Delete/5
