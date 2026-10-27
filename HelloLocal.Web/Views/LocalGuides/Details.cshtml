@@ -24,20 +24,30 @@
             @Html.DisplayFor(model => model.Bio)
         </dd>
     </dl>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.HourlyRate)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HourlyRate)
+        <dd class="col-sm-10">
+            @Model.HourlyRate.ToString("0")
         </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Experiences)
+        <dt class="col-sm-2">
+            Experiences
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Experiences)
+        <dd class="col-sm-10">
+            @if (Model.Experiences != null && Model.Experiences.Any())
+            {
+                <ul>
+                    @foreach (var exp in Model.Experiences)
+                    {
+                        <li>@exp.Title - $@exp.Price.ToString("0.00")</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <span class="text-muted">This guide doesn't have any experiences yet.</span>
+            }
         </dd>
-    </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |

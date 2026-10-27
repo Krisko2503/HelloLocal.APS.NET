@@ -29,6 +29,7 @@ public class LocalGuidesController : Controller
         }
 
         var localguide = await _context.Guides
+            .Include(g => g.Experiences)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (localguide == null)
         {
