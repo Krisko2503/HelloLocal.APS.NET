@@ -6,7 +6,6 @@ namespace HelloLocal.Web.Data
 {
     public static class DataSeeder
     {
-         
         public static void Seed(ApplicationDbContext dbContext)
         {
             if (dbContext.LocalGuides.Any())
@@ -16,15 +15,23 @@ namespace HelloLocal.Web.Data
             {
                 Name = "Ivan Ivanov",
                 City = "Pleven",
-                Bio = "Experienced local guide focusing on historical landmarks and urban culture."
+                Bio = "Experienced local guide focusing on historical landmarks and urban culture.",
+                HourlyRate = 25m
             };
 
             var guide2 = new LocalGuide();
             guide2.Name = "Maria Marinova";
             guide2.City = "Sofia";
             guide2.Bio = "Professional photographer offering scenic walking tours and visual storytelling.";
+            guide2.HourlyRate = 30m;
 
-            var guide3 = new LocalGuide { Name = "Georgi Georgiev", City = "Varna", Bio = "Specializing in seaside walks, maritime history, and culinary experiences." };
+            var guide3 = new LocalGuide
+            {
+                Name = "Georgi Georgiev",
+                City = "Varna",
+                Bio = "Specializing in seaside walks, maritime history, and culinary experiences.",
+                HourlyRate = 20m
+            };
 
             dbContext.LocalGuides.AddRange(guide1, guide2, guide3);
             dbContext.SaveChanges();
@@ -43,13 +50,32 @@ namespace HelloLocal.Web.Data
             tour2.Price = 50.00m;
             tour2.LocalGuideId = guide2.Id;
 
-            var tour3 = new TourExperience { Title = "Seaside Culture Tour", Description = "Evening walk focusing on local maritime history and traditional seafood.", Price = 35.00m, LocalGuideId = guide3.Id };
+            var tour3 = new TourExperience
+            {
+                Title = "Seaside Culture Tour",
+                Description = "Evening walk focusing on local maritime history and traditional seafood.",
+                Price = 35.00m,
+                LocalGuideId = guide3.Id
+            };
 
             dbContext.TourExperiences.Add(tour1);
             dbContext.TourExperiences.Add(tour2);
             dbContext.TourExperiences.Add(tour3);
 
             dbContext.SaveChanges();
+
+            if (!dbContext.Bookings.Any())
+            {
+                var booking1 = new Booking
+                {
+                    TouristName = "Kristiyan",
+                    BookingDate = new DateTime(2026, 11, 23, 16, 0, 0),
+                    TourExperienceId = tour1.Id
+                };
+
+                dbContext.Bookings.Add(booking1);
+                dbContext.SaveChanges();
+            }
         }
     }
 }

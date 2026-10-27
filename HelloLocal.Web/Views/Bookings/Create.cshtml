@@ -1,9 +1,5 @@
 @model HelloLocal.Web.Models.Booking
 
-@{
-    ViewData["Title"] = "Create";
-    var experienceList = ViewData["TourExperienceId"] as SelectList;
-}
 
 <h1>Create</h1>
 <h4>Booking</h4>
@@ -29,7 +25,7 @@
 
             <div class="form-group mb-4">
                 <label asp-for="TourExperienceId" class="control-label" style="font-weight: bold;">Experience</label>
-                <select asp-for="TourExperienceId" class="form-control" asp-items="experienceList">
+                <select asp-for="TourExperienceId" class="form-control" asp-items="ViewBag.Experiences">
                     <option value="">-- Choose an experience --</option>
                 </select>
                 <small class="text-muted">Choose the experience you would like to book.</small>

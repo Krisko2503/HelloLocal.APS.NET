@@ -44,6 +44,7 @@ public class TourExperiencesController : Controller
         }
 
         var tourexperience = await _context.TourExperiences
+            .Include(t => t.Guide)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (tourexperience == null)
         {
